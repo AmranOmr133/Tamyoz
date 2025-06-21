@@ -347,9 +347,96 @@ section {
     transition: var(--transition);
 }
 
+.service-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--white-color);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 1;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    border: 1px solid rgba(42, 63, 84, 0.1);
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+                var(--primary-color) 0%, 
+                var(--secondary-color) 100%);
+    z-index: -1;
+    transform: translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.service-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
 .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 
+                0 0 0 2px rgba(212, 175, 55, 0.3),
+                0 0 30px rgba(212, 175, 55, 0.1);
+    color: var(--white-color);
+}
+
+.service-card:hover::before {
+    transform: translateX(0);
+}
+
+.service-card:hover::after {
+    animation: ripple 1s ease-out;
+}
+
+.service-card:hover .service-icon {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--white-color);
+    transform: scale(1.1);
+}
+
+.service-card:hover h3,
+.service-card:hover p,
+.service-card:hover .service-features li {
+    color: var(--white-color);
+    transform: translateX(5px);
+}
+
+.service-card:hover .service-features li::before {
+    color: var(--white-color);
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+/* إضافة انتقالات للعناصر الداخلية */
+.service-icon,
+.service-card h3,
+.service-card p,
+.service-features li {
+    transition: all 0.4s ease;
 }
 
 .service-icon {
